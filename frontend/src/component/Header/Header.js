@@ -2,7 +2,7 @@ import {useState} from "react";
 
 import Data from "./DataPages";
 import Category from "./DataCategory";
-import {NavLink} from "react-router-dom";
+import {NavLink,Link} from "react-router-dom";
 
 export default function Header() {
     const [showCategory, setShowCategory] = useState(false);
@@ -36,23 +36,29 @@ export default function Header() {
                             <div className="col-lg-4 col-md-12">
                                 <div className="cart-box mt-all-30">
                                     <ul className="d-flex justify-content-lg-end justify-content-center align-items-center">
-                                        <li className={"ml-3"}><a href="Cart" className={"ml-3"}><i
+                                        <li className={"ml-3"}><a href="/Cart" className={"ml-3"}><i
                                             className="lnr lnr-cart"></i><span
                                             className="my-cart"><span
                                             className="total-pro">1</span><span>Giỏ hàng</span></span></a>
                                         </li>
-                                        <li><a href="logout" className={"ml-3"}><i className="lnr lnr-user"></i><span
-                                            className="my-cart"><span><strong></strong></span><span>đăng xuất</span></span></a>
-
+                                        <li>
+                                            <Link to={"/logout"} className={"ml-3"}>
+                                                <i className="lnr lnr-user"></i><span
+                                                className="my-cart"><span><strong></strong></span><span>đăng xuất</span></span>
+                                            </Link>
                                         </li>
 
-                                        <li><a href="ListProductAd" className={"ml-3"}><i
-                                            className="lnr lnr-pointer-right"></i><span
-                                            className="my-cart"><span><strong></strong></span><span>vào admin</span></span></a>
+                                        <li>
+                                            <Link to={"/"} className={"ml-3"}><i
+                                                className="lnr lnr-pointer-right"></i><span
+                                                className="my-cart"><span><strong></strong></span><span>vào admin</span></span></Link>
 
                                         </li>
-                                        <li><a href="login.jsp" className={"ml-3"}><i className="lnr lnr-user"></i><span
-                                            className="my-cart"><span> <strong>Đăng nhập</strong></span><span> đăng kí</span></span></a>
+                                        <li>
+                                        <Link to={"/login"} className={"ml-3"}>
+                                                <i className="lnr lnr-user"></i><span
+                                                className="my-cart"><span> <strong>Đăng nhập</strong></span><span> đăng kí</span></span>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>
