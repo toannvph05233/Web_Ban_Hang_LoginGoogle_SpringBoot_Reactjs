@@ -136,7 +136,8 @@ const Footer = () => {
                                                 TP.Thủ Đức,
                                                 TP.HCM
                                             </li>
-                                            <li><i className="lnr lnr-envelope"></i><a href="#"> EMAIL:
+                                            <li><i className="lnr lnr-envelope"></i>
+                                                <a> EMAIL:
                                                 vphanhchinh@hcmuaf.edu.vn </a></li>
                                             <li>
                                                 <i className="lnr lnr-phone-handset"></i> SĐT: (84-28) 3896 6780
