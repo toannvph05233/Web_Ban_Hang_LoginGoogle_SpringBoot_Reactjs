@@ -62,7 +62,7 @@ const Register = () => {
     };
     return (
         <>
-            <Breadcrumb title={"Đăng k  ý"}/>
+            <Breadcrumb title={"Đăng ký"}/>
             <div class="register-account ptb-100 ptb-sm-60">
                 <div class="container">
                     <div class="row">
