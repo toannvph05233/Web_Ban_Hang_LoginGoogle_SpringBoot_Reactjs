@@ -2,17 +2,40 @@ import {useState} from "react";
 
 import Data from "./DataPages";
 import Category from "./DataCategory";
-import {NavLink} from "react-router-dom";
+import {NavLink, Link, useNavigate} from "react-router-dom";
+import axios from "axios";
 
 export default function Header() {
     const [showCategory, setShowCategory] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
+    const navigate =useNavigate();
+    const accessToken = localStorage.getItem("accessToken");
+
+    const user = sessionStorage.getItem("user");
+
+    const filteredData = Data.filter(data => {
+        // Check if user from session is null and data.name is "trang cá nhân"
+        return !(sessionStorage.getItem('user') === null && data.path === '/profile');
+    });
     const toggleCategory = () => {
         setShowCategory(!showCategory);
     };
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
+    const handleLogout = async () => {
+        try {
+            await axios.post('http://localhost:8080/api/v1/auth/logout');
+            // Xóa token khỏi localStorage
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            sessionStorage.removeItem("user");
+            console.log("Đã đăng xuất thành công");
+            navigate('/'); // Chuyển hướng đến trang đăng nhập hoặc trang chính
+        } catch (error) {
+            console.error('Lỗi khi đăng xuất:', error);
+        }
+    }
     return (
         <div>
             <header>
@@ -36,24 +59,38 @@ export default function Header() {
                             <div className="col-lg-4 col-md-12">
                                 <div className="cart-box mt-all-30">
                                     <ul className="d-flex justify-content-lg-end justify-content-center align-items-center">
-                                        <li className={"ml-3"}><a href="Cart" className={"ml-3"}><i
+                                        <li className={"ml-3"}><a href="/Cart" className={"ml-0"}><i
                                             className="lnr lnr-cart"></i><span
                                             className="my-cart"><span
                                             className="total-pro">1</span><span>Giỏ hàng</span></span></a>
                                         </li>
-                                        <li><a href="logout" className={"ml-3"}><i className="lnr lnr-user"></i><span
-                                            className="my-cart"><span><strong></strong></span><span>đăng xuất</span></span></a>
+                                        {user == null ? <li >
+                                                <Link to={"/login"} className={"ml-2"}>
+                                                    <i className="lnr lnr-user"></i><span
+                                                    className={"my-cart"}><span> <strong>Đăng nhập</strong></span><span> đăng kí</span></span>
+                                                </Link>
+                                            </li> :
+                                            <>
+                                                <li>
+                                                    <Link  onClick={handleLogout} className={"ml-2"}>
+                                                        <i className="lnr lnr-user"></i><span
+                                                        className="my-cart"><span><strong></strong></span><span className={"mt-1"}><strong>Đăng xuất</strong></span></span>
+                                                    </Link>
 
-                                        </li>
+                                                </li>
+                                                {user.role === "ADMIN" ?"":
+                                                    <li>
+                                                        <Link to={"/"} className={"ml-2"}><i
+                                                            className="lnr lnr-pointer-right"></i><span
+                                                            className="my-cart"><span></span><span className={"mt-1"}><strong>Vào admin</strong> </span></span>
+                                                        </Link>
 
-                                        <li><a href="ListProductAd" className={"ml-3"}><i
-                                            className="lnr lnr-pointer-right"></i><span
-                                            className="my-cart"><span><strong></strong></span><span>vào admin</span></span></a>
+                                                    </li>
+                                                }
+                                            </>
+                                        }
 
-                                        </li>
-                                        <li><a href="login.jsp" className={"ml-3"}><i className="lnr lnr-user"></i><span
-                                            className="my-cart"><span> <strong>Đăng nhập</strong></span><span> đăng kí</span></span></a>
-                                        </li>
+
                                     </ul>
                                 </div>
                             </div>
@@ -70,7 +107,7 @@ export default function Header() {
                             <div className="col-xl-9 col-lg-8 col-md-12 ">
                                 <nav className="d-none d-lg-block">
                                     <ul className="header-bottom-list d-flex">
-                                        {Data.map((data, index) => (
+                                        {filteredData.map((data, index) => (
                                             <li>
                                                 <NavLink key={index} to={data.path}>
                                                     {data.name}
@@ -78,14 +115,14 @@ export default function Header() {
                                             </li>
 
                                         ))}
-                                          </ul>
+                                    </ul>
                                 </nav>
                                 <div className="mobile-menu d-block d-lg-none mb-2" onClick={toggleMenu}>
                                     <br/>
                                     <br/>
                                     <nav>
                                         <ul className={`ml-3 ${showMenu ? '' : 'menu-hidden'}`}>
-                                            {Data.map((data, index) => (
+                                            {filteredData.map((data, index) => (
                                                 <li>
                                                     <NavLink key={index} to={data.path}>
                                                         {data.name}
@@ -109,7 +146,7 @@ export default function Header() {
                                     {Category.map((data, index) => (
                                         <li>
                                             <NavLink key={index} to={data.path}>
-                                               + {data.name}
+                                                + {data.name}
                                             </NavLink>
                                         </li>
 
@@ -132,7 +169,7 @@ export default function Header() {
                                         {Category.map((data, index) => (
                                             <li>
                                                 <NavLink key={index} to={data.path}>
-                                                   + {data.name}
+                                                    + {data.name}
                                                 </NavLink>
                                             </li>
 
