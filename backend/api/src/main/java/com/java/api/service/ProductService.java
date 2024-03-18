@@ -68,6 +68,8 @@ public class ProductService {
         product.setCategory(Category.valueOf(categoryAsString));
         product.setPrice(productDto.getPrice());
         product.setStorage(productDto.getStorage());
+        product.setImg1(productDto.getImg1());
+        product.setImg2(productDto.getImg2());
 
         // Lưu đối tượng Product vào cơ sở dữ liệu
         return productRepository.save(product);
@@ -87,6 +89,8 @@ public class ProductService {
         product.setCategory(Category.valueOf(categoryAsString));
         product.setPrice(p.getPrice());
         product.setStorage(p.getStorage());
+        product.setImg1(p.getImg1());
+        product.setImg2(p.getImg2());
         productRepository.save(product);
         return product;
     }

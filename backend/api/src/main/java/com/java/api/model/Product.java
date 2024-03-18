@@ -23,6 +23,9 @@ public class Product {
     private  Category category;
     private int price;
     private int storage;
+	private String img1;
+	private String img2;
+
 	public long getId() {
 		return id;
 	}
@@ -59,18 +62,40 @@ public class Product {
 	public void setStorage(int storage) {
 		this.storage = storage;
 	}
-	public Product(long id, String title, String description, Category category, int price, int storage) {
-		super();
+
+	public String getImg1() {
+		return img1;
+	}
+
+	public void setImg1(String img1) {
+		this.img1 = img1;
+	}
+
+	public String getImg2() {
+		return img2;
+	}
+
+	public void setImg2(String img2) {
+		this.img2 = img2;
+	}
+
+
+
+	public Product(long id, String title, String description, Category category, int price, int storage, String img1, String img2) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.category = category;
 		this.price = price;
 		this.storage = storage;
+		this.img1 = img1;
+		this.img2 = img2;
 	}
+
 	public Product() {
 		super();
 	}
+
 	
 	
 	
