@@ -1,6 +1,5 @@
 package vn.id.quanghuydevfs.drcomputer.controller.product;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -9,9 +8,10 @@ import vn.id.quanghuydevfs.drcomputer.model.product.Product;
 import vn.id.quanghuydevfs.drcomputer.service.ProductService;
 
 import java.util.Optional;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
+
 public class ProductController {
     @Autowired
     private ProductService productService;
