@@ -1,14 +1,7 @@
 package vn.id.quanghuydevfs.drcomputer.model.product;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Builder
@@ -25,4 +18,8 @@ public class Product {
     private Category category;
     private int price;
     private int storage;
+    private double sale;
+    private String img1;
+    private String img2;
+
 }
