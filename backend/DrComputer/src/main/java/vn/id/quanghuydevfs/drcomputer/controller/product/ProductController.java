@@ -8,7 +8,7 @@ import vn.id.quanghuydevfs.drcomputer.model.product.Product;
 import vn.id.quanghuydevfs.drcomputer.service.ProductService;
 
 import java.util.Optional;
-
+@CrossOrigin
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1")
@@ -35,6 +35,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductById(id));
     }
 
+
 //    @Secured("ADMIN")
 //    @PostMapping("/management/product/add")
 //    public ResponseEntity<Product> addProduct(@RequestBody ProductDto productDto) {
@@ -55,3 +56,4 @@ public class ProductController {
 //        return ResponseEntity.ok(productService.delete(id));
 //    }
 }
+
