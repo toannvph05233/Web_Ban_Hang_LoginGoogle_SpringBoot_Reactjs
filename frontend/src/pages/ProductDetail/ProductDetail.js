@@ -3,12 +3,14 @@ import Breadcrumb from "../../component/Breadcrumb/Breadcrumb";
 import Footer from "../../component/Footer/Footer";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import Evulate from "../../component/evulate/Evulate";
+import Comment from "../../component/comment/Comment";
 
 function ProductDetail({productId}){
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/v1/product/1`)
+        axios.get(`http://localhost:8080/api/v1/product/${productId}`)
             .then(response => {
                 setProduct(response.data);
             })
@@ -152,120 +154,21 @@ function ProductDetail({productId}){
                     <div className="thumnail-desc pb-100 pb-sm-60">
                         <div className="container">
                             <div className="row">
-                                <div className="col-sm-12">
-                                    <ul className="main-thumb-desc nav tabs-area" role="tablist">
-                                        <li><a className="active" data-toggle="tab" href="#dtail">Thông tin chi tiết sản
-                                            phẩm</a></li>
-                                        <li><a data-toggle="tab" href="#review">Đánh giá</a></li>
-                                    </ul>
+                                    <div className="col-sm-12">
+                                        <ul className="main-thumb-desc nav tabs-area" role="tablist">
+                                            <li><a className="active" data-toggle="tab" href="#dtail">Thông tin chi tiết
+                                                sản
+                                                phẩm</a></li>
+                                            <li><a data-toggle="tab" href="#review">Đánh giá</a></li>
+                                            <li><a data-toggle="tab" href="#comment">Bình luận</a></li>
+                                        </ul>
 
-                                    <div className="tab-content thumb-content border-default">
+                                        <div className="tab-content thumb-content border-default">
                                         <div id="dtail" className="tab-pane fade show active">
                                             <p>{product.description}</p>
                                         </div>
-                                        <div id="review" className="tab-pane fade">
-
-                                            <div className="review border-default universal-padding">
-                                                <div className="group-title">
-                                                    <h2>Đánh giá của khách hàng</h2>
-                                                </div>
-                                                <h4 className="review-mini-title">Truemart</h4>
-                                                <ul className="review-list">
-
-                                                    <li>
-                                                        <span>Hạng</span>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star-o"></i>
-                                                        <i className="fa fa-star-o"></i>
-                                                        <label>Truemart</label>
-                                                    </li>
-
-                                                    <li>
-                                                        <span>Giá</span>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star-o"></i>
-                                                        <i className="fa fa-star-o"></i>
-                                                        <i className="fa fa-star-o"></i>
-                                                        <label>Đánh giá bởi Truemart</label>
-                                                    </li>
-
-                                                    <li>
-                                                        <span>Giá trị</span>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star-o"></i>
-                                                        <label>Đăng vào 7/20/18</label>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-
-                                            <div className="review border-default universal-padding mt-30">
-                                                <h2 className="review-title mb-30">Bạn đang đánh giá: <br/><span>sản phẩm tốt, nhưng giá hơi đắt.</span>
-                                                </h2>
-                                                <p className="review-mini-title">your rating</p>
-                                                <ul className="review-list">
-
-                                                    <li>
-                                                        <span>Hạng</span>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star-o"></i>
-                                                        <i className="fa fa-star-o"></i>
-                                                    </li>
-
-                                                    <li>
-                                                        <span>Giá</span>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star-o"></i>
-                                                        <i className="fa fa-star-o"></i>
-                                                        <i className="fa fa-star-o"></i>
-                                                    </li>
-
-                                                    <li>
-                                                        <span>Giá trị</span>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star-o"></i>
-                                                    </li>
-
-                                                </ul>
-
-                                                <div className="riview-field mt-40">
-                                                    <form autoComplete="off" action="#">
-                                                        <div className="form-group">
-                                                            <label className="req" htmlFor="sure-name">Tên tài
-                                                                khoản</label>
-                                                            <input type="text" className="form-control" id="sure-name"
-                                                                   required="required"/>
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <label className="req" htmlFor="subject">Bảng tóm
-                                                                tắt</label>
-                                                            <input type="text" className="form-control" id="subject"
-                                                                   required="required"/>
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <label className="req" htmlFor="comments">Đánh giá</label>
-                                                            <textarea className="form-control" rows="5" id="comments"
-                                                                      required="required"></textarea>
-                                                        </div>
-                                                        <button type="submit" className="customer-btn">Gửi</button>
-                                                    </form>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
+                                        <Evulate/>
+                                            <Comment/>
                                     </div>
 
                                 </div>
