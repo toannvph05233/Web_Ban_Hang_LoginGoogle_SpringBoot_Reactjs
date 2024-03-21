@@ -33,4 +33,26 @@ public class ProductController {
     public ResponseEntity<Optional<Product>> getProductById(@PathVariable Long id) {
         return ResponseEntity.ok(productService.getProductById(id));
     }
+
+
+//    @Secured("ADMIN")
+//    @PostMapping("/management/product/add")
+//    public ResponseEntity<Product> addProduct(@RequestBody ProductDto productDto) {
+//        return ResponseEntity.ok(productService.add(productDto));
+//    }
+//
+//    @Secured("/ADMIN")
+//
+//    @PutMapping("/management/product/update/{id}")
+//    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
+//        return ResponseEntity.ok(productService.update(id, productDto));
+//    }
+//
+//    @Secured("ADMIN")
+//
+//    @DeleteMapping("/management/product/delete/{id}")
+//    public ResponseEntity<Boolean> deleteProduct(@PathVariable Long id) {
+//        return ResponseEntity.ok(productService.delete(id));
+//    }
 }
+
