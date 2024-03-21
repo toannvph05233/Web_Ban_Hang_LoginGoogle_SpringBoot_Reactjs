@@ -4536,3 +4536,34 @@ a.shipping-calculator-button:hover {
     top: 6px;
     transition: all 0.3s ease-in 0s;
 }
+.product-thumbnail {
+    margin-top: 15px; /* Khoảng cách giữa hình ảnh chính và thumbnail */
+}
+
+.product-thumbnail .thumb-menu {
+    text-align: center; /* Căn giữa nội dung thumbnail */
+}
+
+.product-thumbnail .thumb-menu a {
+    display: inline-block;
+    margin-right: 10px; /* Khoảng cách giữa các thumbnail */
+    width: 80px; /* Độ rộng của thumbnail */
+    height: 80px; /* Chiều cao của thumbnail */
+    overflow: hidden;
+}
+
+.product-thumbnail .thumb-menu img {
+    width: 100%; /* Kích thước hình ảnh thumbnail */
+    height: auto; /* Đảm bảo tỉ lệ hình ảnh không bị méo */
+    transition: transform 0.3s ease; /* Hiệu ứng hover */
+}
+
+.product-thumbnail .thumb-menu a:hover img {
+    transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
+}
+.main-product-tab-area .single-product .pro-img {
+    float: none;
+    margin-left: 0;
+    width: 100%;
+    max-width: 100%;
+}
