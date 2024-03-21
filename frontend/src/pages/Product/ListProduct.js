@@ -25,19 +25,20 @@ const ListProduct=() => {
                         <div className="row">
                             <div className="col-lg-3 order-2 order-lg-1"    >
                                 <div className="sidebar">
+                                    {/*The Loai*/}
                                     <div className="electronics mb-40">
                                         <h3 className="sidebar-title">Electronics</h3>
                                         <div id="shop-cate-toggle" className="category-menu sidebar-menu sidbar-style">
                                             <ul>
                                                 <li className="has-sub"><a href="#">Camera</a>
                                                     <ul className="category-sub">
-                                                        <li><a href="shop.html">Cords and Cables</a></li>
+                                                        <li><a href="shop.html">Card</a></li>
                                                         <li><a href="shop.html">gps accessories</a></li>
                                                         <li><a href="shop.html">Microphones</a></li>
                                                         <li><a href="shop.html">Wireless Transmitters</a></li>
                                                     </ul>
                                                 </li>
-                                                <li className="has-sub"><a href="#">gamepad</a>
+                                                <li className="has-sub"><a href="#">P</a>
                                                     <ul className="category-sub">
                                                         <li><a href="shop.html">cube lifestyle hd</a></li>
                                                         <li><a href="shop.html">gopro hero4</a></li>
