@@ -8,7 +8,7 @@ spring:
         globally_quoted_identifiers: true
         dialect: org.hibernate.dialect.MySQLDialect
   datasource:
-    url: jdbc:mysql://localhost/drcomputer
+    url: jdbc:mysql://localhost:3306/drcomputer
     username: root
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
