@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const ProductItem = () => {
+const ProductItem = () =>{
     const [products, setProducts] = useState([""]);
 
     useEffect(() => {

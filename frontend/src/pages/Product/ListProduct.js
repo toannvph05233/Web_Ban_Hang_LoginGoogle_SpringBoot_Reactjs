@@ -5,9 +5,24 @@ import Footer from "../../component/Footer/Footer";
 import Header from "../../component/Header/Header";
 import Breadcrumb from "../../component/Breadcrumb/Breadcrumb";
 import ProductItem from "../../component/ProductItem/ProductItem";
+import Category from "../../component/Category/Category";
 
 const ListProduct=() => {
-
+    // const [productCate, setProductCate] = useState([]);
+    //
+    // useEffect(() => {
+    //     const fetchProducts = async () => {
+    //         try {
+    //             const response = await axios.get(`http://localhost:8080/api/v1/products`);
+    //             setProductCate(response.data.content);
+    //             console.log(response.data.content);
+    //         } catch (error) {
+    //             console.error('Error fetching products:', error);
+    //         }
+    //     };
+    //
+    //     fetchProducts(); // Call fetchProducts function here
+    // }, []);
     return (
         <div>
             <div className="wrapper">
@@ -25,82 +40,7 @@ const ListProduct=() => {
                         <div className="row">
                             <div className="col-lg-3 order-2 order-lg-1"    >
                                 <div className="sidebar">
-                                    {/*The Loai*/}
-                                    <div className="electronics mb-40">
-                                        <h3 className="sidebar-title">Electronics</h3>
-                                        <div id="shop-cate-toggle" className="category-menu sidebar-menu sidbar-style">
-                                            <ul>
-                                                <li className="has-sub"><a href="#">Camera</a>
-                                                    <ul className="category-sub">
-                                                        <li><a href="shop.html">Card</a></li>
-                                                        <li><a href="shop.html">gps accessories</a></li>
-                                                        <li><a href="shop.html">Microphones</a></li>
-                                                        <li><a href="shop.html">Wireless Transmitters</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li className="has-sub"><a href="#">P</a>
-                                                    <ul className="category-sub">
-                                                        <li><a href="shop.html">cube lifestyle hd</a></li>
-                                                        <li><a href="shop.html">gopro hero4</a></li>
-                                                        <li><a href="shop.html">bhandycam cx405ags</a></li>
-                                                        <li><a href="shop.html">vixia hf r600</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li className="has-sub"><a href="#">Digital Cameras</a>
-                                                    <ul className="category-sub">
-                                                        <li><a href="shop.html">Gold eye</a></li>
-                                                        <li><a href="shop.html">Questek</a></li>
-                                                        <li><a href="shop.html">Snm</a></li>
-                                                        <li><a href="shop.html">vantech</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li className="has-sub"><a href="#">Virtual Reality</a>
-                                                    <ul className="category-sub">
-                                                        <li><a href="shop.html">Samsung</a></li>
-                                                        <li><a href="shop.html">Toshiba</a></li>
-                                                        <li><a href="shop.html">Transcend</a></li>
-                                                        <li><a href="shop.html">Sandisk</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div className="search-filter mb-40">
-                                        <h3 className="sidebar-title">filter by price</h3>
-                                        <form action="#" className="sidbar-style">
-                                            <div id="slider-range"></div>
-                                            <input type="text" id="amount" className="amount-range" readOnly=""/>
-                                        </form>
-                                    </div>
-                                    <div className="sidebar-categorie mb-40">
-                                        <h3 className="sidebar-title">categories</h3>
-                                        <ul className="sidbar-style">
-                                            <li className="form-check">
-                                                <input className="form-check-input" value="#" id="camera"
-                                                       type="checkbox"/>
-                                                <label className="form-check-label" htmlFor="camera">Cameras
-                                                    (8)</label>
-                                            </li>
-                                            <li className="form-check">
-                                                <input className="form-check-input" value="#" id="GamePad"
-                                                       type="checkbox"/>
-                                                <label className="form-check-label" htmlFor="GamePad">GamePad
-                                                    (8)</label>
-                                            </li>
-                                            <li className="form-check">
-                                                <input className="form-check-input" value="#" id="Digital"
-                                                       type="checkbox"/>
-                                                <label className="form-check-label" htmlFor="Digital">Digital
-                                                    Cameras (8)</label>
-                                            </li>
-                                            <li className="form-check">
-                                                <input className="form-check-input" value="#" id="Virtual"
-                                                       type="checkbox"/>
-                                                <label className="form-check-label" htmlFor="Virtual"> Virtual
-                                                    Reality (8) </label>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <Category/>
                                     <div className="size mb-40">
                                         <h3 className="sidebar-title">size</h3>
                                         <ul className="size-list sidbar-style">

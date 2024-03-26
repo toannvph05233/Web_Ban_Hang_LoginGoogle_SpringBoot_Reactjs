@@ -26,7 +26,6 @@ public class ProductService {
         } else {
             sorting = Sort.by(sort.equals("asc") ? Sort.Order.asc("price") : Sort.Order.desc("price"));
         }
-
         Pageable pageable;
         if ("all".equalsIgnoreCase(category)) {
             pageable = PageRequest.of(page - 1, size, sorting);
@@ -95,4 +94,6 @@ public class ProductService {
             return false;
         }
     }
+
+
 }
