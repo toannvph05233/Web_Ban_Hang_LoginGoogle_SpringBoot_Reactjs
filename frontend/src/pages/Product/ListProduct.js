@@ -1,12 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Footer from "../../component/Footer/Footer";
 import Header from "../../component/Header/Header";
 import Breadcrumb from "../../component/Breadcrumb/Breadcrumb";
 import ProductItem from "../../component/ProductItem/ProductItem";
+import Category from "../../component/Category/Category";
 
-const ListProduct=() => {
+const ListProduct = () => {
+    const [type, setType] = useState("all");
+    const [products, setProducts] = useState([])
+    useEffect(() => {
+        axios.get(`http://localhost:8080/api/v1/products?category=${type}`)
+            .then(response => {
+                setProducts(response.data.content);
+                console.log(response.data.content)
+            })
+            .catch(error => {
+                console.error('Error fetching product:', error);
+            });
+    }, [type]);
+
+
+    // Call fetchProducts function here
 
     return (
         <div>
@@ -23,88 +39,81 @@ const ListProduct=() => {
                 <div className="main-shop-page pt-100 pb-100 ptb-sm-60">
                     <div className="container">
                         <div className="row">
-                            <div className="col-lg-3 order-2 order-lg-1"    >
+                            <div className="col-lg-3 order-2 order-lg-1">
                                 <div className="sidebar">
                                     <div className="electronics mb-40">
-                                        <h3 className="sidebar-title">Electronics</h3>
+                                        <h3 className="sidebar-title">Category</h3>
                                         <div id="shop-cate-toggle" className="category-menu sidebar-menu sidbar-style">
                                             <ul>
-                                                <li className="has-sub"><a href="#">Camera</a>
-                                                    <ul className="category-sub">
-                                                        <li><a href="shop.html">Cords and Cables</a></li>
-                                                        <li><a href="shop.html">gps accessories</a></li>
-                                                        <li><a href="shop.html">Microphones</a></li>
-                                                        <li><a href="shop.html">Wireless Transmitters</a></li>
-                                                    </ul>
+                                                <li className="has-sub">
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" type="radio"
+                                                               name="flexRadioDefault" id="flexRadioDefault1"
+                                                               onClick={()=> setType("all")}
+                                                        />
+                                                            <label className="form-check-label"
+                                                                   htmlFor="flexRadioDefault1">
+                                                                Tất Cả
+                                                            </label>
+                                                    </div>
                                                 </li>
-                                                <li className="has-sub"><a href="#">gamepad</a>
-                                                    <ul className="category-sub">
-                                                        <li><a href="shop.html">cube lifestyle hd</a></li>
-                                                        <li><a href="shop.html">gopro hero4</a></li>
-                                                        <li><a href="shop.html">bhandycam cx405ags</a></li>
-                                                        <li><a href="shop.html">vixia hf r600</a></li>
-                                                    </ul>
+                                                <li className="has-sub">
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" type="radio"
+                                                               name="flexRadioDefault" id="flexRadioDefault2"
+                                                               onClick={()=> setType("laptop")}
+                                                        />
+                                                        <label className="form-check-label"
+                                                               htmlFor="flexRadioDefault2">
+                                                            Laptop
+                                                        </label>
+                                                    </div>
                                                 </li>
-                                                <li className="has-sub"><a href="#">Digital Cameras</a>
-                                                    <ul className="category-sub">
-                                                        <li><a href="shop.html">Gold eye</a></li>
-                                                        <li><a href="shop.html">Questek</a></li>
-                                                        <li><a href="shop.html">Snm</a></li>
-                                                        <li><a href="shop.html">vantech</a></li>
-                                                    </ul>
+                                                <li className="has-sub">
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" type="radio"
+                                                               name="flexRadioDefault" id="flexRadioDefault3"
+                                                               onClick={()=> setType("ram")}
+                                                        />
+                                                        <label className="form-check-label"
+                                                               htmlFor="flexRadioDefault3">
+                                                            Ram
+                                                        </label>
+                                                    </div>
                                                 </li>
-                                                <li className="has-sub"><a href="#">Virtual Reality</a>
-                                                    <ul className="category-sub">
-                                                        <li><a href="shop.html">Samsung</a></li>
-                                                        <li><a href="shop.html">Toshiba</a></li>
-                                                        <li><a href="shop.html">Transcend</a></li>
-                                                        <li><a href="shop.html">Sandisk</a></li>
-                                                    </ul>
+                                                <li className="has-sub">
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" type="radio"
+                                                               name="flexRadioDefault" id="flexRadioDefault4"
+                                                               onClick={()=> setType("mouse")}
+                                                        />
+                                                        <label className="form-check-label"
+                                                               htmlFor="flexRadioDefault4">
+                                                            Chuột
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                                <li className="has-sub">
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" type="radio"
+                                                               name="flexRadioDefault" id="flexRadioDefault5"
+
+                                                        />
+                                                        <label className="form-check-label"
+                                                               htmlFor="flexRadioDefault5" onClick={()=> setType("keyboard")}>
+                                                            Bàn phím
+                                                        </label>
+                                                    </div>
                                                 </li>
                                             </ul>
                                         </div>
-                                    </div>
-                                    <div className="search-filter mb-40">
-                                        <h3 className="sidebar-title">filter by price</h3>
-                                        <form action="#" className="sidbar-style">
-                                            <div id="slider-range"></div>
-                                            <input type="text" id="amount" className="amount-range" readOnly=""/>
-                                        </form>
-                                    </div>
-                                    <div className="sidebar-categorie mb-40">
-                                        <h3 className="sidebar-title">categories</h3>
-                                        <ul className="sidbar-style">
-                                            <li className="form-check">
-                                                <input className="form-check-input" value="#" id="camera"
-                                                       type="checkbox"/>
-                                                <label className="form-check-label" htmlFor="camera">Cameras
-                                                    (8)</label>
-                                            </li>
-                                            <li className="form-check">
-                                                <input className="form-check-input" value="#" id="GamePad"
-                                                       type="checkbox"/>
-                                                <label className="form-check-label" htmlFor="GamePad">GamePad
-                                                    (8)</label>
-                                            </li>
-                                            <li className="form-check">
-                                                <input className="form-check-input" value="#" id="Digital"
-                                                       type="checkbox"/>
-                                                <label className="form-check-label" htmlFor="Digital">Digital
-                                                    Cameras (8)</label>
-                                            </li>
-                                            <li className="form-check">
-                                                <input className="form-check-input" value="#" id="Virtual"
-                                                       type="checkbox"/>
-                                                <label className="form-check-label" htmlFor="Virtual"> Virtual
-                                                    Reality (8) </label>
-                                            </li>
-                                        </ul>
                                     </div>
                                     <div className="size mb-40">
                                         <h3 className="sidebar-title">size</h3>
                                         <ul className="size-list sidbar-style">
                                             <li className="form-check">
-                                                <input className="form-check-input" value="" id="small" type="checkbox"/>
+                                                <input className="form-check-input" value="" id="small"
+                                                       type="checkbox"/>
                                                 <label className="form-check-label" htmlFor="small">S (6)</label>
                                             </li>
                                             <li className="form-check">
@@ -113,7 +122,8 @@ const ListProduct=() => {
                                                 <label className="form-check-label" htmlFor="medium">M (9)</label>
                                             </li>
                                             <li className="form-check">
-                                                <input className="form-check-input" value="" id="large" type="checkbox"/>
+                                                <input className="form-check-input" value="" id="large"
+                                                       type="checkbox"/>
                                                 <label className="form-check-label" htmlFor="large">L (8)</label>
                                             </li>
                                         </ul>
@@ -373,7 +383,11 @@ const ListProduct=() => {
                                 <div className="main-categorie mb-all-40">
                                     <div className="tab-content fix">
                                         <div id="grid-view" className="tab-pane fade show active">
-                                            <ProductItem/>
+                                            <div className="row">
+                                                {products.map(p => (
+                                                    <ProductItem key={p.id} product={p}/>
+                                                ))}
+                                            </div>
                                         </div>
                                         <div id="list-view" className="tab-pane fade">
                                             <div className="single-product">

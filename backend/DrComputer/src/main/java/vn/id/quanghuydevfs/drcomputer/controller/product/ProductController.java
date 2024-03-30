@@ -10,7 +10,6 @@ import vn.id.quanghuydevfs.drcomputer.service.ProductService;
 import java.util.Optional;
 @CrossOrigin
 @RestController
-@CrossOrigin
 @RequestMapping("/api/v1")
 
 public class ProductController {
