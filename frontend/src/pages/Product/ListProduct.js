@@ -1,28 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Footer from "../../component/Footer/Footer";
 import Header from "../../component/Header/Header";
 import Breadcrumb from "../../component/Breadcrumb/Breadcrumb";
 import ProductItem from "../../component/ProductItem/ProductItem";
 import Category from "../../component/Category/Category";
 
-const ListProduct=() => {
-    // const [productCate, setProductCate] = useState([]);
-    //
-    // useEffect(() => {
-    //     const fetchProducts = async () => {
-    //         try {
-    //             const response = await axios.get(`http://localhost:8080/api/v1/products`);
-    //             setProductCate(response.data.content);
-    //             console.log(response.data.content);
-    //         } catch (error) {
-    //             console.error('Error fetching products:', error);
-    //         }
-    //     };
-    //
-    //     fetchProducts(); // Call fetchProducts function here
-    // }, []);
+const ListProduct = () => {
+    const [type, setType] = useState("all");
+    const [products, setProducts] = useState([])
+    useEffect(() => {
+        axios.get(`http://localhost:8080/api/v1/products?category=${type}`)
+            .then(response => {
+                setProducts(response.data.content);
+                console.log(response.data.content)
+            })
+            .catch(error => {
+                console.error('Error fetching product:', error);
+            });
+    }, [type]);
+
+
+    // Call fetchProducts function here
+
     return (
         <div>
             <div className="wrapper">
@@ -38,14 +39,81 @@ const ListProduct=() => {
                 <div className="main-shop-page pt-100 pb-100 ptb-sm-60">
                     <div className="container">
                         <div className="row">
-                            <div className="col-lg-3 order-2 order-lg-1"    >
+                            <div className="col-lg-3 order-2 order-lg-1">
                                 <div className="sidebar">
-                                    <Category/>
+                                    <div className="electronics mb-40">
+                                        <h3 className="sidebar-title">Category</h3>
+                                        <div id="shop-cate-toggle" className="category-menu sidebar-menu sidbar-style">
+                                            <ul>
+                                                <li className="has-sub">
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" type="radio"
+                                                               name="flexRadioDefault" id="flexRadioDefault1"
+                                                               onClick={()=> setType("all")}
+                                                        />
+                                                            <label className="form-check-label"
+                                                                   htmlFor="flexRadioDefault1">
+                                                                Tất Cả
+                                                            </label>
+                                                    </div>
+                                                </li>
+                                                <li className="has-sub">
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" type="radio"
+                                                               name="flexRadioDefault" id="flexRadioDefault2"
+                                                               onClick={()=> setType("laptop")}
+                                                        />
+                                                        <label className="form-check-label"
+                                                               htmlFor="flexRadioDefault2">
+                                                            Laptop
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                                <li className="has-sub">
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" type="radio"
+                                                               name="flexRadioDefault" id="flexRadioDefault3"
+                                                               onClick={()=> setType("ram")}
+                                                        />
+                                                        <label className="form-check-label"
+                                                               htmlFor="flexRadioDefault3">
+                                                            Ram
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                                <li className="has-sub">
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" type="radio"
+                                                               name="flexRadioDefault" id="flexRadioDefault4"
+                                                               onClick={()=> setType("mouse")}
+                                                        />
+                                                        <label className="form-check-label"
+                                                               htmlFor="flexRadioDefault4">
+                                                            Chuột
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                                <li className="has-sub">
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" type="radio"
+                                                               name="flexRadioDefault" id="flexRadioDefault5"
+
+                                                        />
+                                                        <label className="form-check-label"
+                                                               htmlFor="flexRadioDefault5" onClick={()=> setType("keyboard")}>
+                                                            Bàn phím
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                     <div className="size mb-40">
                                         <h3 className="sidebar-title">size</h3>
                                         <ul className="size-list sidbar-style">
                                             <li className="form-check">
-                                                <input className="form-check-input" value="" id="small" type="checkbox"/>
+                                                <input className="form-check-input" value="" id="small"
+                                                       type="checkbox"/>
                                                 <label className="form-check-label" htmlFor="small">S (6)</label>
                                             </li>
                                             <li className="form-check">
@@ -54,7 +122,8 @@ const ListProduct=() => {
                                                 <label className="form-check-label" htmlFor="medium">M (9)</label>
                                             </li>
                                             <li className="form-check">
-                                                <input className="form-check-input" value="" id="large" type="checkbox"/>
+                                                <input className="form-check-input" value="" id="large"
+                                                       type="checkbox"/>
                                                 <label className="form-check-label" htmlFor="large">L (8)</label>
                                             </li>
                                         </ul>
@@ -314,7 +383,11 @@ const ListProduct=() => {
                                 <div className="main-categorie mb-all-40">
                                     <div className="tab-content fix">
                                         <div id="grid-view" className="tab-pane fade show active">
-                                            <ProductItem/>
+                                            <div className="row">
+                                                {products.map(p => (
+                                                    <ProductItem key={p.id} product={p}/>
+                                                ))}
+                                            </div>
                                         </div>
                                         <div id="list-view" className="tab-pane fade">
                                             <div className="single-product">
