@@ -4,12 +4,14 @@ import Data from "./DataPages";
 import Category from "./DataCategory";
 import {NavLink, Link, useNavigate} from "react-router-dom";
 import axios from "axios";
+import {useSelector} from "react-redux";
 
 export default function Header() {
     const [showCategory, setShowCategory] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const navigate =useNavigate();
     const accessToken = localStorage.getItem("accessToken");
+    const cart = useSelector((state) => state.cart.totalCart);
 
     const user = sessionStorage.getItem("user");
 
@@ -59,10 +61,10 @@ export default function Header() {
                             <div className="col-lg-4 col-md-12">
                                 <div className="cart-box mt-all-30">
                                     <ul className="d-flex justify-content-lg-end justify-content-center align-items-center">
-                                        <li className={"ml-3"}><a href="/Cart" className={"ml-0"}><i
+                                        <li className={"ml-3"}><Link to={"/cart"}  className={"ml-0"}><i
                                             className="lnr lnr-cart"></i><span
                                             className="my-cart"><span
-                                            className="total-pro">1</span><span>Giỏ hàng</span></span></a>
+                                            className="total-pro">{cart}</span><span>Giỏ hàng</span></span></Link>
                                         </li>
                                         {user == null ? <li >
                                                 <Link to={"/login"} className={"ml-2"}>
@@ -158,7 +160,6 @@ export default function Header() {
                     </div>
                 </div>
             </header>
-            <div className="main-page-banner pb-50 off-white-bg">
                 <div className="container">
                     <div className="row">
                         <div className="col-xl-3 col-lg-4 d-none d-lg-block">
@@ -181,7 +182,6 @@ export default function Header() {
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     )
 }
