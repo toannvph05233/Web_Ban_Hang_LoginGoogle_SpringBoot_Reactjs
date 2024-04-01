@@ -7,7 +7,7 @@ import Breadcrumb from "../../component/Breadcrumb/Breadcrumb";
 import ProductItem from "../../component/ProductItem/ProductItem";
 import Category from "../../component/Category/Category";
 
-const ListProduct = () => {
+const Product = () => {
     const [type, setType] = useState("all");
     const [products, setProducts] = useState([])
     useEffect(() => {
@@ -27,8 +27,6 @@ const ListProduct = () => {
     return (
         <div>
             <div className="wrapper">
-
-                <Header/>
                 <Breadcrumb title={'Danh sách sản phẩm'}/>
                 <div className="popup_banner">
                     <span className="popup_off_banner">×</span>
@@ -550,6 +548,6 @@ const ListProduct = () => {
         </div>
     );
 };
-export default ListProduct;
+export default Product;
 
 

@@ -2,19 +2,21 @@ import {Outlet} from "react-router-dom";
 
 import './App.css';
 import Header from "./component/Header/Header";
-import ListProduct from "./pages/Product/ListProduct";
-
+import {Provider} from "react-redux";
+import Store from "./pages/Cart/Redux/Store";
 
 function App() {
     return (
-        <div>
-            {/*<Header/>*/}
-            {/*<div>*/}
-            {/*    <Outlet>*/}
-            {/*    </Outlet>*/}
-            {/*</div>*/}
-            <ListProduct/>
-        </div>
+        <Provider store={Store}>
+            <div>
+                <Header/>
+                <div>
+                    <Outlet>
+                    </Outlet>
+                </div>
+                {/*<Product/>*/}
+            </div>
+        </Provider>
     );
 }
 

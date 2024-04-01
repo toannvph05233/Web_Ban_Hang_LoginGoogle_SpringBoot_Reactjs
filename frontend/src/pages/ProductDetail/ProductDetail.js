@@ -5,19 +5,23 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import Evulate from "../../component/evulate/Evulate";
 import Comment from "../../component/comment/Comment";
+import {useParams} from "react-router-dom";
 
-function ProductDetail({productId}){
+function ProductDetail(){
     const [product, setProduct] = useState(null);
+    const { id } = useParams();
+
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/v1/product/${productId}`)
+        axios.get(`http://localhost:8080/api/v1/product/${id}`)
             .then(response => {
                 setProduct(response.data);
+                console.log(response.data)
             })
             .catch(error => {
                 console.error('Error fetching product:', error);
             });
-    }, [productId]);
+    }, [id]);
 
 
     return (
@@ -31,7 +35,6 @@ function ProductDetail({productId}){
                             <img src="img/banner/logo.png" alt=""/>
                         </div>
                     </div>
-                    <Header/>
                     <Breadcrumb/>
                     <div className="main-product-thumbnail ptb-100 ptb-sm-60">
                         <div className="container">
@@ -86,9 +89,9 @@ function ProductDetail({productId}){
                                             </div>
                                             <div className="pro-price mtb-30">
                                                 <p className="d-flex align-items-center"><span
-                                                    className="prev-price">{product.price}VND</span><span
-                                                    className="price">{product.price*product.sale}VND</span><span
-                                                    className="saving-price">Giảm {(1-product.sale)*100}%</span></p>
+                                                    className="prev-price">{product.price} VND</span><span
+                                                        className="price">{product.price-product.price * product.sale}VND</span><span
+                                                    className="saving-price">Giảm {(product.sale)}%</span></p>
                                             </div>
                                             <p className="mb-20 pro-desc-details"> {product.description}</p>
                                             <div className="product-size mb-20 clearfix">
