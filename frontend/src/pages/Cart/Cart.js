@@ -14,18 +14,16 @@ const Cart = () => {
     const handleRemoveFromCart = (id) => {
         dispatch(removeFromCart({id}));
     };
-
-    const handleQuantityChange = (id, e) => {
-        const quantity = parseInt(e.target.value);
-        dispatch(updateCart({id, quantity}));
-    };
-
-    function handleDecreaseQuantity(id) {
-        
+    function handleDecreaseQuantity(id, currentQuantity) {
+        if (currentQuantity > 1) {
+            dispatch(updateCart({ id, quantity: currentQuantity - 1 }));
+            console.log(cart)
+        }
     }
 
-    function handleIncreaseQuantity(id) {
-        
+    function handleIncreaseQuantity(id, currentQuantity) {
+        dispatch(updateCart({ id, quantity: currentQuantity + 1 }));
+        console.log(cart)
     }
 
     return (
@@ -73,20 +71,22 @@ const Cart = () => {
                                             </td>
                                             <td className="product-quantity">
                                                 <button className="btn btn-sm btn-outline-danger"
-                                                        onClick={() => handleDecreaseQuantity(item.product.id)}> -
+                                                        onClick={() => handleDecreaseQuantity(item.product.id,item.quantity)}> -
                                                 </button>
                                                 <span className="m-2">{item.quantity}</span>
                                                 <button className="btn btn-sm btn-outline-success"
-                                                        onClick={() => handleIncreaseQuantity(item.product.id)}>+
+                                                        onClick={() => handleIncreaseQuantity(item.product.id,item.quantity)}>+
                                                 </button>
+
 
                                             </td>
                                             <td className="product-subtotal">
                                                 {(item.product.price * item.quantity)} VNĐ
                                             </td>
                                             <td className="product-remove">
-                                            <button onClick={() => handleRemoveFromCart(item.product.id)}>
-                                                    Remove
+                                                <button className={"btn"}
+                                                        onClick={() => handleRemoveFromCart(item.product.id)}>
+                                                    <i className="fa fa-trash"></i>
                                                 </button>
                                             </td>
                                         </tr>
@@ -94,11 +94,10 @@ const Cart = () => {
                                     </tbody>
                                 </table>
                             </div>
-                            {cart.length!==0?(
+                            {cart.length !== 0 ? (
                                 <div className="row">
                                     <div className="col-md-8 col-sm-12">
                                         <div className="buttons-cart">
-                                            <input type="submit" value="Cập nhật giỏ hàng"/>
                                             <Link to="/ProductLists">Tiếp tục mua sắm</Link>
                                         </div>
                                     </div>
@@ -110,7 +109,8 @@ const Cart = () => {
                                                 <tr className="order-total">
                                                     <th>Tổng:</th>
                                                     <td>
-                                                        <strong><span className="amount">{totalPrice} VNĐ</span></strong>
+                                                        <strong><span
+                                                            className="amount">{totalPrice} VNĐ</span></strong>
                                                     </td>
                                                 </tr>
                                                 </tbody>
@@ -121,7 +121,7 @@ const Cart = () => {
                                         </div>
                                     </div>
                                 </div>
-                            ):""}
+                            ) : ""}
 
                         </div>
                     </div>
