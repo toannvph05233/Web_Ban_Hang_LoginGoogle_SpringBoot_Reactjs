@@ -13,10 +13,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
+import vn.id.quanghuydevfs.drcomputer.dto.auth.AccountGoogle;
 import vn.id.quanghuydevfs.drcomputer.dto.auth.AuthenticationDto;
 import vn.id.quanghuydevfs.drcomputer.controller.auth.AuthenticationResponse;
 import vn.id.quanghuydevfs.drcomputer.dto.auth.RegisterDto;
 import vn.id.quanghuydevfs.drcomputer.dto.user.UserDto;
+import vn.id.quanghuydevfs.drcomputer.model.user.Roles;
 import vn.id.quanghuydevfs.drcomputer.model.user.User;
 import vn.id.quanghuydevfs.drcomputer.repository.UserRepository;
 import vn.id.quanghuydevfs.drcomputer.security.jwt.JwtService;
@@ -25,6 +27,7 @@ import vn.id.quanghuydevfs.drcomputer.model.token.TokenRepository;
 import vn.id.quanghuydevfs.drcomputer.model.token.TokenType;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +50,45 @@ public class AuthService implements LogoutHandler {
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUser, jwtToken);
+        var userDto = new UserDto();
+        userDto.setEmail(user.getEmail());
+        userDto.setFullname(user.getFullname());
+        userDto.setPhoneNumber(user.getPhoneNumber());
+        userDto.setRole(user.getRoles());
+
+        return AuthenticationResponse.builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .user(userDto)
+                .build();
+    }
+
+    public AuthenticationResponse authenticateWithGoogle(AccountGoogle accountGoogle) {
+        Optional<User> optionalUser = repository.findByEmail(accountGoogle.getEmail());
+        User user = null;
+        if (optionalUser.isPresent()) {
+            User user1 = optionalUser.get();
+            user = optionalUser.get();
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    user1, null, user1.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        } else {
+            var userNew = User.builder()
+                    .fullname(accountGoogle.getFamilyName())
+                    .email(accountGoogle.getEmail())
+                    .password(passwordEncoder.encode("12345678"))
+                    .roles(Roles.valueOf("USER"))
+                    .phoneNumber("0999999999")
+                    .build();
+            user = repository.save(userNew);
+        }
+
+
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        revokeAllUserTokens(user);
+        saveUserToken(user, jwtToken);
+
         var userDto = new UserDto();
         userDto.setEmail(user.getEmail());
         userDto.setFullname(user.getFullname());

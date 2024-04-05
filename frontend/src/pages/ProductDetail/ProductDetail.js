@@ -171,7 +171,7 @@ function ProductDetail(){
                                             <p>{product.description}</p>
                                         </div>
                                         <Evulate/>
-                                            <Comment/>
+                                            <Comment productId={id}/>
                                     </div>
 
                                 </div>

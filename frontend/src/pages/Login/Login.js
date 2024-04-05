@@ -2,13 +2,25 @@ import Breadcrumb from "../../component/Breadcrumb/Breadcrumb";
 import Footer from "../../component/Footer/Footer";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {GoogleLogin} from 'react-google-login';
+import {loadGapiInsideDOM} from "gapi-script";
+
 
 const Login = () => {
+
+    //npm install --save gapi-script
+    useEffect(() => {
+        (async () => {
+            await loadGapiInsideDOM();
+        })();
+    });
+
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
@@ -18,7 +30,6 @@ const Login = () => {
             const refeshToken = response.data.refresh_token;
             const user = response.data.user;
             // eslint-disable-next-line react-hooks/rules-of-hooks
-
 
             // Lưu access token vào localStorage
             localStorage.setItem('accessToken', accessToken);
@@ -35,8 +46,44 @@ const Login = () => {
             console.error('Đăng nhập thất bại:', error);
         }
     };
+
+    //npm install react-google-login
+    const responseGoogle = async (response) => {
+        const profileObj = response.profileObj;
+        try {
+            const response = await axios.post('http://localhost:8080/api/v1/auth/login-google', profileObj);
+
+            // Lưu access token vào localStorage hoặc Redux store
+            const accessToken = response.data.access_token;
+            const refeshToken = response.data.refresh_token;
+            const user = response.data.user;
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+
+            // Lưu access token vào localStorage
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refeshToken', refeshToken);
+
+            sessionStorage.setItem("user", JSON.stringify(user));
+
+            console.log('Access token:', accessToken);
+            console.log('Refesh token:', response.data.access_token);
+            console.log('User:', response.data.user);
+            navigate("/products")
+        } catch (error) {
+            setError(error.message);
+            console.error('Đăng nhập thất bại:', error.message);
+        }
+
+    };
     return (<div className="wrapper">
         <Breadcrumb title={"Đăng nhập"}/>
+        <GoogleLogin
+            clientId="269490971481-t2biclkpc9opcvedjqsgsldsnhfl8ont.apps.googleusercontent.com"
+            buttonText="Login with Google"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+        />
         <div className="log-in ptb-100 ptb-sm-60">
             <div className="container">
                 <div className="row">

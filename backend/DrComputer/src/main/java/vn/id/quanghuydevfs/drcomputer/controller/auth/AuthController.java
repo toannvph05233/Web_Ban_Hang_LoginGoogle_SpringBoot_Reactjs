@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import vn.id.quanghuydevfs.drcomputer.dto.auth.AccountGoogle;
 import vn.id.quanghuydevfs.drcomputer.dto.auth.AuthenticationDto;
 import vn.id.quanghuydevfs.drcomputer.dto.auth.RegisterDto;
 import vn.id.quanghuydevfs.drcomputer.service.AuthService;
@@ -28,6 +29,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationDto request) {
         return ResponseEntity.ok(authService.authenticate(request));
+    }
+
+    @PostMapping("/login-google")
+    public ResponseEntity<AuthenticationResponse> authenticateGoogle(@RequestBody AccountGoogle accountGoogle) {
+        return ResponseEntity.ok(authService.authenticateWithGoogle(accountGoogle));
     }
     @PostMapping("/refresh-token")
     public void refreshToken(
