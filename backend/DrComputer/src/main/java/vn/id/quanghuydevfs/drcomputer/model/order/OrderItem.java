@@ -1,12 +1,12 @@
 package vn.id.quanghuydevfs.drcomputer.model.order;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import lombok.*;
 import vn.id.quanghuydevfs.drcomputer.model.product.Product;
-
-import java.math.BigDecimal;
 
 
 @Builder

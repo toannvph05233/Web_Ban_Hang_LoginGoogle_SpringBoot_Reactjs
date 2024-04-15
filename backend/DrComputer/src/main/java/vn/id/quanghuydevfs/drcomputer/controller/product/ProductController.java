@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import vn.id.quanghuydevfs.drcomputer.model.comment.Comment;
 import vn.id.quanghuydevfs.drcomputer.model.comment.CommentRequest;
 import vn.id.quanghuydevfs.drcomputer.model.comment.CommentResponse;
+import vn.id.quanghuydevfs.drcomputer.model.order.Order;
 import vn.id.quanghuydevfs.drcomputer.model.product.Product;
 import vn.id.quanghuydevfs.drcomputer.model.user.User;
 import vn.id.quanghuydevfs.drcomputer.repository.CommentRepository;
+import vn.id.quanghuydevfs.drcomputer.repository.OrderRepository;
 import vn.id.quanghuydevfs.drcomputer.repository.UserRepository;
 import vn.id.quanghuydevfs.drcomputer.service.ProductService;
 import vn.id.quanghuydevfs.drcomputer.service.UserService;
@@ -32,6 +34,9 @@ public class ProductController {
     private CommentRepository commentRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @GetMapping("/products")
     public ResponseEntity<Page<Product>> getAllProducts(@RequestParam(defaultValue = "all") String category, @RequestParam(defaultValue = "") String search, @RequestParam(defaultValue = "1") int page,
@@ -106,6 +111,24 @@ public class ProductController {
             commentResponseArrayList.add(commentResponse);
         }
         return ResponseEntity.ok(commentResponseArrayList);
+    }
+
+    @GetMapping("/delete/comments/{idComment}")
+    public ResponseEntity<?> deleteComment(@PathVariable Long idComment) {
+        List<Comment> comments = commentRepository.findByComment_Id(idComment);
+        if (comments.size() > 0){
+            for (Comment c:comments) {
+                commentRepository.deleteById(c.getId());
+            }
+        }
+        commentRepository.deleteById(idComment);
+        return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/my_order/{email}")
+    public ResponseEntity<?> myOrder(@PathVariable String email) {
+        List<Order> orders = orderRepository.findAllByUserEmail(email);
+        return ResponseEntity.ok(orders);
     }
 
 
