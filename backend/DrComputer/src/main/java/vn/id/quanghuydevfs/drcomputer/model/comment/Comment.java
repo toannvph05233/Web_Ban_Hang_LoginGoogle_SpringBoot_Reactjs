@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import vn.id.quanghuydevfs.drcomputer.model.product.Product;
 import vn.id.quanghuydevfs.drcomputer.model.user.User;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -17,6 +19,8 @@ public class Comment {
     private Long id;
 
     private String content;
+    private String image;
+    private LocalDateTime time = LocalDateTime.now();
 
     @ManyToOne
     private Comment comment;

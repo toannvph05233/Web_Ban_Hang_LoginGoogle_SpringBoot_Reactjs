@@ -37,6 +37,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/v1/**", "/api/v1/auth/login-google")
                         .permitAll()
                         .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
+//                        .requestMatchers("/api/v1/admin/**").hasAnyRole(ADMIN.name())
                         .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
                         .requestMatchers(POST, "/api/v1/management/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
                         .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
