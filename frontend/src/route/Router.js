@@ -9,6 +9,7 @@ import Register from "../pages/Register/Register";
 import ProductDetail from "../pages/ProductDetail/ProductDetail";
 import Cart from "../pages/Cart/Cart";
 import MyOrder from "../pages/MyOrder/MyOrder";
+import AdminComment from "../component/admin/Admin_Comment/AdminComment";
 
 const Router = createBrowserRouter([{
     path: '/',
@@ -57,6 +58,11 @@ const Router = createBrowserRouter([{
         {
             path: '/cart',
             element: <Cart/>,
+
+        },
+        {
+            path: '/admin/comments',
+            element: <AdminComment/>,
 
         },
 

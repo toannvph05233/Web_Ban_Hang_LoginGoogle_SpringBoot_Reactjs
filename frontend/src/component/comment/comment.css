@@ -74,3 +74,26 @@ Safari 7+ */ background: linear-gradient(to bottom right, rgba(79, 172, 254, 1),
     color: #fff;
 }
 
+.textarea-container {
+    position: relative;
+}
+
+.textarea-container textarea {
+    width: 100%;
+    resize: none;
+    padding-right: 40px; /* Khoảng cách giữa textarea và nút tải ảnh */
+}
+
+.file-upload-label {
+    position: absolute;
+    bottom: 5px; /* Căn chỉnh nút tải ảnh theo độ cao của textarea */
+    left: 10px; /* Căn chỉnh nút tải ảnh theo phía bên phải của textarea */
+    cursor: pointer;
+}
+
+/* Icon style */
+.material-icons {
+    font-family: 'Material Icons'; /* Đảm bảo sử dụng font của Material Icons */
+    font-size: 24px; /* Kích thước của icon */
+}
+
