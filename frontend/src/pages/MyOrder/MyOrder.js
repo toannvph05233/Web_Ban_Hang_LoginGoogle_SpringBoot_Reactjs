@@ -1,11 +1,9 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import './MyOrder.css';
 import {Link} from "react-router-dom";
 
 function MyOrder() {
     const [order, setOrder] = useState([]);
-    const [selectedOrder, setSelectedOrder] = useState(null); // State to track the selected order for modal
 
     useEffect(() => {
         fetchMyOrder();
@@ -19,110 +17,92 @@ function MyOrder() {
             );
             setOrder(response.data);
         } catch (error) {
-            console.error("Error fetching comments:", error);
+            console.error("Error fetching orders:", error);
         }
     }
 
-    // Function to handle when user clicks on fullname
-    const handleFullNameClick = (selectedOrder) => {
-        console.log("selectedOrder")
-        console.log(selectedOrder)
-        setSelectedOrder(selectedOrder);
-    };
-
-    // Function to close the modal
-    const closeModal = () => {
-        setSelectedOrder(null);
-    };
-
     return (
-        <div>
-            <div className="container">
-                <br/>
-                <br/>
-                <h2>My Order</h2>
-                <br/>
-                {selectedOrder && (
-                    <div style={{marginTop: '-50px'}}>
-                        <div className="modal-content">
-                            <h1>Order Details</h1>
-                            <div className="modal-body">
-                                <h6>Order Items:</h6>
-                                <table className="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name Product</th>
-                                        <th>Category Product</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Image</th>
-                                        <th>Review</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {selectedOrder.map((item, index) => (
-                                        <tr key={item.id}>
-                                            <td>{index + 1}</td>
-                                            <td>{item.product.title}</td>
-                                            <td>{item.product.category}</td>
-                                            <td>{item.price}</td>
-                                            <td>{item.quantity}</td>
-                                            <td><img src={item.product.img1} width={150} height={110}/></td>
-                                            <td>
-                                                <Link to={"/products/" + item.product.id}>
-                                                    <button className='btn-dark'>Review</button>
-                                                </Link>
-                                            </td>
+        <div className="container mt-4">
+            <h2 className="mb-4">My Orders</h2>
 
-                                        </tr>
-                                    ))}
-                                    </tbody>
-                                </table>
+            {order.map((o, index) => (
+
+                <div key={index} className="card mb-4" style={{backgroundColor: "#F5F5F5"}}>
+                    <div className="card-header" style={{backgroundColor: "#F08080"}}>
+                        <h5 className="card-title mb-0">Order #{index + 1} - {o.fullname}</h5>
+                    </div>
+                    <div className="card-body">
+                        <div className="row">
+                            <div className="col-md-3">
+                                <h6 className="font-weight-bold text-success mb-0">Date:</h6>
+                                <h6>{o.createdAt}</h6>
                             </div>
-                            <div className="modal-footer">
-                                <button className="btn btn-danger" onClick={closeModal}>
-                                    Close
-                                </button>
+                            <div className="col-md-3">
+                                <h6 className="font-weight-bold text-info mb-0">Payment Method:</h6>
+                                <h6>{o.paymentMethod}</h6>
+                            </div>
+                            <div className="col-md-3">
+                                <h6 className="font-weight-bold text-danger mb-0">Status:</h6>
+                                <h6 className={o.status === 1 ? "text-success" : "text-danger"}>
+                                    {o.status === 1 ? "Successful" : "Failed"}
+                                </h6>
                             </div>
                         </div>
+
+                        <div className="table-responsive mt-4"
+                             style={{backgroundColor: "#f8f9fa", padding: "20px", borderRadius: "10px"}}>
+                            {o.orderItems.map((item, i) => (
+                                <>
+                                    <div key={i} className="order-item row" style={{marginBottom: "20px"}}>
+                                        <div className="m-2 col-lg-2 col-md-3 col-sm-4">
+                                            <img src={item.product.img1} alt={item.product.title} width={130}
+                                                 height={130}
+                                                 style={{border: "2px solid #dee2e6", borderRadius: "5px"}}/>
+
+                                        </div>
+                                        <div className="col-lg-9 col-md-9 col-sm-8">
+                                            <div className="row">
+                                                <div className="m-2 col-8">
+                                                    <h5 style={{color: "#343a40"}}>
+                                                        Tên sản phẩm:
+                                                        <Link to={"/products/" + item.product.id}>
+                                                        <span
+                                                            style={{color: "#007bff"}}> {item.product.title}</span>
+                                                        </Link>
+                                                    </h5>
+                                                    <p style={{color: "#28a745"}}>Giá bán: ${item.price}</p>
+                                                    <p style={{color: "#dc3545"}}>Số lượng: {item.quantity}</p>
+
+                                                </div>
+                                                <div className="m-2 col-md-3">
+                                                    <span
+                                                        style={{color: "#6c757d"}}>Loại sản phẩm: {item.product.category}</span>
+                                                    <div className="col-md-2">
+                                                        <br/>
+                                                        <button type="button" className="btn btn-danger">Mua Lại
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                </>
+                            ))}
+                        </div>
+
+                        <div className="row p-1">
+                            <hr className="col-11"/>
+                            <div className="col-md-10">
+                                <h3 className="text-danger">Total Amount: {o.totalAmount} $</h3>
+                            </div>
+
+                        </div>
                     </div>
-                )}
-                <table className="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>fullname</th>
-                        <th>createdAt</th>
-                        <th>paymentMethod</th>
-                        <th>totalAmount</th>
-                        <th>status</th>
-                        <th>note</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {order.map((o) => (
-                        <tr key={o.id}>
-                            <td>
-                                <button
-                                    className="btn btn-link"
-                                    onClick={() => handleFullNameClick(o.orderItems)}
-                                >
-                                    {o.fullname}
-                                </button>
-                            </td>
-                            <td>{o.createdAt}</td>
-                            <td>{o.paymentMethod}</td>
-                            <td>{o.totalAmount}</td>
-                            <td>{o.status}</td>
-                            <td>{o.note}</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
-            </div>
 
-            {/* Modal to display order details */}
-
+                </div>
+            ))}
         </div>
     );
 }

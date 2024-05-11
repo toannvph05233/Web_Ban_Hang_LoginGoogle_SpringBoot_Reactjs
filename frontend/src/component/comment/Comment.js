@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import './comment.css';
+import "./comment.css";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
 import {formatDistanceToNow} from 'date-fns';
@@ -142,157 +142,91 @@ function Comments({productId}) {
 
     // JSX
     const renderComments = (comment) => {
-        // CSS inline styles
-        const commentStyle = {
-            marginBottom: '20px',
-            padding: '10px',
-            border: '1px solid #ccc',
-        };
-
-        const commentStyle2 = {
-            marginBottom: '20px',
-            padding: '10px',
-        };
-        const childCommentsStyle = {
-            marginLeft: '20px',
-        };
-
-        const replyStyle = {
-            marginTop: '10px',
-        };
-
         return (
-            <div key={comment.id} style={commentStyle}>
-                <div className='row'>
-                    <div className='col-1'>
-                        <img className="rounded-circle shadow-1-strong me-3"
-                             src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="55"
-                             height="55"/>
+            <div key={comment.id} className="border border-1 border-secondary rounded p-3 mb-4">
+                <div className="d-flex align-items-center mb-3">
+                    <img className="rounded-circle me-3 ml-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="45" height="45" />
+                    <div>
+                        <h5 className="mb-0 ml-3">{comment.user.fullname}</h5>
+                        <p className="text-muted mb-0 ml-3">{formatDistanceToNow(new Date(comment.time), { addSuffix: true })}</p>
                     </div>
-                    <div className='col-10'>
-                        <h5 style={{marginTop: '20px'}}>{comment.user.fullname}</h5>
-                        <p>{formatDistanceToNow(new Date(comment.time), {addSuffix: true})}</p>
-                    </div>
-                    <div className="col-1">
-                        {/* Nút xóa comment chỉ hiển thị khi comment là của người dùng */}
-                        {comment.user.email === JSON.parse(sessionStorage.getItem("user")).email && (
-                            <button type="button" className="delete-btn"
-                                    onClick={() => handleDeleteComment(comment.id)}>
-                                <FontAwesomeIcon icon={faTrash}/>
-                            </button>
-                        )}
-                    </div>
+                    {comment.user.email === JSON.parse(sessionStorage.getItem("user")).email && (
+                        <button  type="button" className="btn btn-outline-danger ms-auto  ml-3" onClick={() => handleDeleteComment(comment.id)}>
+                            <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                    )}
                 </div>
-                <p style={{margin: '10px'}}>{comment.content}</p>
+                <p>{comment.content}</p>
                 {comment.image && (
                     <div>
-                        <img src={comment.image} alt="Comment Image" width={250} height={200}/>
-                        <br/>
-                        <br/>
+                        <img src={comment.image} alt="Comment Image" className="img-thumbnail" width="250" />
                     </div>
                 )}
 
-                {/* Nút trả lời */}
-                <button type="button" className="reply-btn" onClick={() => handleReplyButtonClick(comment.id)}>Trả lời
-                </button>
+                <button type="button" className="btn btn-outline-primary mt-3 me-3" onClick={() => handleReplyButtonClick(comment.id)}>Trả lời</button>
 
-                <hr/>
                 {comment.commentChild && (
-                    <div style={replyStyle}>
-                        {Array.isArray(comment.commentChild) && (
-                            <div style={childCommentsStyle}>
-                                {comment.commentChild.map((childComment) => (
-                                    <div key={childComment.id} style={commentStyle2}>
-
-                                        <div className='row'>
-                                            <div className='col-1'>
-                                                <img className="rounded-circle shadow-1-strong me-3"
-                                                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp"
-                                                     alt="avatar" width="55"
-                                                     height="55"/>
-                                            </div>
-                                            <div className='col-10'>
-                                                <h5 style={{marginTop: '20px'}}>{childComment.user.fullname}</h5>
-                                                <p>{formatDistanceToNow(new Date(childComment.time), {addSuffix: true})}</p>
-
-                                            </div>
-                                            <div className='col-1'>
-                                                {/* Nút xóa comment chỉ hiển thị khi comment là của người dùng */}
-                                                {childComment.user.email === JSON.parse(sessionStorage.getItem("user")).email && (
-                                                    <button type="button" className="delete-btn"
-                                                            onClick={() => handleDeleteComment(childComment.id)}>
-                                                        <FontAwesomeIcon icon={faTrash}/>
-                                                    </button>
-                                                )}
-                                            </div>
+                    <div className="mt-3 p-3">
+                        {Array.isArray(comment.commentChild) ? (
+                            comment.commentChild.map((childComment) => (
+                                <div key={childComment.id} className="border border-1 border-secondary rounded p-3 mb-3">
+                                    <div className="d-flex align-items-center mb-3">
+                                        <img className="rounded-circle me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="45" height="45" />
+                                        <div>
+                                            <h5 className="mb-0 ml-3">{childComment.user.fullname}</h5>
+                                            <p className="text-muted mb-0 ml-3">{formatDistanceToNow(new Date(childComment.time), { addSuffix: true })}</p>
                                         </div>
-                                        <p style={{margin: '10px'}}>{childComment.content}</p>
-                                        {childComment.image && (
-                                            <div>
-                                                <img src={childComment.image} alt="Comment Image" width={250}
-                                                     height={200}/>
-                                                <br/>
-                                                <br/>
-                                            </div>
+                                        {childComment.user.email === JSON.parse(sessionStorage.getItem("user")).email && (
+                                            <button type="button" className="btn btn-outline-danger ms-auto ml-3" onClick={() => handleDeleteComment(childComment.id)}>
+                                                <FontAwesomeIcon icon={faTrash} />
+                                            </button>
                                         )}
-
-                                        <hr/>
                                     </div>
-                                ))}
-                            </div>
-                        )}
-                        {!Array.isArray(comment.commentChild) && (
-                            <div style={commentStyle}>
-                                {/*<h4>{comment.commentChild.user.email}:</h4>*/}
+                                    <p>{childComment.content}</p>
+                                    {childComment.image && (
+                                        <div>
+                                            <img src={childComment.image} alt="Comment Image" className="img-thumbnail" width="250" />
+                                        </div>
+                                    )}
+                                </div>
+                            ))
+                        ) : (
+                            <div className="border border-1 border-secondary rounded p-3 mb-3">
                                 <p>{comment.commentChild.content}</p>
                             </div>
                         )}
                     </div>
                 )}
+
                 {replyFormVisible && idParent === comment.id && (
-                    <div style={{marginTop: '20px'}}>
-        <textarea className="form-control" rows="2" placeholder="Viết phản hồi..."
-                  value={newCommentChild}
-                  onChange={handleChangeCommentChild}
-                  style={{marginBottom: '10px', width: '100%'}}> </textarea>
-                        <label htmlFor="imageUploadChild">
-                            <FontAwesomeIcon icon={faFileUpload} style={{ cursor: 'pointer', marginLeft: '10px' }} />
-                            <span style={{ textDecoration: 'underline', color: "#6699FF"}}> Up image</span>
-                            <input
-                                type="file"
-                                id="imageUploadChild"
-                                accept="image/*"
-                                onChange={handleImageChangeChild}
-                                style={{ display: 'none' }}
-                            />
+                    <div className="mt-3">
+                        <textarea className="form-control mb-3" rows="2" placeholder="Viết phản hồi..." value={newCommentChild} onChange={handleChangeCommentChild}></textarea>
+                        <label htmlFor="imageUploadChild" className="btn btn-outline-primary me-3">
+                            <FontAwesomeIcon icon={faFileUpload} style={{ marginRight: '5px' }} />
+                            Up image
+                            <input type="file" id="imageUploadChild" accept="image/*" onChange={handleImageChangeChild} style={{ display: 'none' }} />
                         </label>
-                        <br/>
-                        {/* Hiển thị hình ảnh đã chọn */}
-                        {previewImageChild && <img src={previewImageChild} alt="Preview" width={300} style={{ marginTop: '10px'}} />}
-                        <br/>
-                        <button
-                            className="reply-submit-btn customer-btn mt-10">Gửi
-                        </button>
+                        {previewImageChild && <img src={previewImageChild} alt="Preview" className="img-thumbnail" width="150" />}
+                        <button className="btn btn-primary  ml-3" onClick={handleSubmitChild}>Gửi</button>
                     </div>
                 )}
             </div>
         );
-    }
+    };
 ;
 
 return (
     <div id="comment" className="tab-pane fade">
 
-        <section className="gradient-custom">
-            <div className="container my-5 py-5">
-                <div className="row d-flex justify-content-center">
-                    <div className="col-md-12 col-lg-11 col-xl-9">
+        <section className="gradient-custom" style={{backgroundColor:"#87CEFA"}}>
+                <div className="row d-flex justify-content-center p-5">
+                    <div className="col-md-12 col-lg-11 col-xl-11">
                         <div className="card">
                             <div className="review border-default universal-padding">
                                 <div className="group-title">
                                     <h2>Thêm bình luận</h2>
                                 </div>
-                                <div className="riview-field mt-40">
+                                <div className="riview-field">
                                     <form autoComplete="off" onSubmit={handleSubmit}>
                                         <div className="form-group">
                                             <label className="req" htmlFor="comments">Bình luận</label>
@@ -321,13 +255,13 @@ return (
                                         {/* Hiển thị hình ảnh đã chọn */}
                                         {previewImage && <img src={previewImage} alt="Preview" width={300} style={{ marginTop: '10px'}} />}
                                         <br/>
-                                        <button type="submit" className="customer-btn">Gửi</button>
+                                        <button  type="submit" className="customer-btn">Gửi</button>
                                     </form>
                                 </div>
                             </div>
 
-                            <div className="card-body p-4">
-                                <h4 className="text-center mb-4 pb-2">Bình luận của khách hàng</h4>
+                            <div className="card-body">
+                                <h4 className="text-center">Bình luận của khách hàng</h4>
 
                                 <div className="row">
                                     <div className="col">
@@ -347,15 +281,15 @@ return (
                     </div>
                 </div>
                 {showConfirmationModal && (
-                    <div className="confirmation-modal">
-                        <div className="modal-content">
+                    <div className="confirmation-modal row">
+                        <div className="modal-content col-4">
                             <p>Bạn chắc chắn muốn xóa comment này?</p>
                             <button onClick={() => setShowConfirmationModal(false)}>Hủy</button>
                             <button onClick={handleConfirmDelete}>Xác nhận</button>
                         </div>
                     </div>
                 )}
-            </div>
+
         </section>
 
 
